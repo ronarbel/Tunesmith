@@ -7,8 +7,11 @@ class App extends React.Component {
     super(props);
     this.state = {
       drum1Status: 'inactive',
-      drum1LastQueuedAt: null
+      drum1LastQueuedAt: null,
       drum2Status: 'inactive',
+      drum2LastQueuedAt: null,
+      drum3Status: 'inactive',
+      drum3LastQueuedAt: null,
     };
 
     this.playSounds = this.playSounds.bind(this);
@@ -43,7 +46,9 @@ class App extends React.Component {
     const oldSoundClipStatus = this.state[soundClipStatusKey];
 
     if (oldSoundClipStatus === 'inactive') {
-      this.setState({})
+      this.setState({
+        [soundClipStatusKey]: 'active',
+      });
     }
     // if inactive, set to queued
     // run queue clearning funtion based on sound type limit
@@ -60,15 +65,37 @@ class App extends React.Component {
     
 
   render() {
-    const { drum1PlayStatus } = this.state;
+    const {
+      drum1Status,
+      drum2Status,
+      drum3Status,
+    } = this.state;
     return (
-      <div>
-        <button type="button" value="drum1" onClick={e => this.toggleSampleStatus(e.target.value)}> Drum1 </button>
-        <Sound
-          url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.6.ogg?1427136627194"
-          playStatus={drum1PlayStatus}
-          playFromPosition={0}
-        />
+      <div id="player">
+        <div>
+          <button type="button" value="drum1" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Drum1 </button>
+          <Sound
+            url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.6.ogg?1427136627194"
+            playStatus={drum1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+            playFromPosition={0}
+          />
+        </div>
+        <div>
+          <button type="button" value="drum2" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Drum2 </button>
+          <Sound
+            url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.1.ogg?1427136627194"
+            playStatus={drum2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+            playFromPosition={0}
+          />
+        </div>
+        <div>
+          <button type="button" value="drum3" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Drum3 </button>
+          <Sound
+            url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.2.ogg?1427136627194"
+            playStatus={drum3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+            playFromPosition={0}
+          />
+        </div>
       </div>
     );
   }
