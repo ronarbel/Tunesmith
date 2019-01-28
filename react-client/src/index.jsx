@@ -7,11 +7,12 @@ class App extends React.Component {
     super(props);
     this.state = {
       drum1Status: 'inactive',
+      drum1LastQueuedAt: null
       drum2Status: 'inactive',
     };
 
     this.playSounds = this.playSounds.bind(this);
-    this.toggleSound = this.toggleSound.bind(this);
+    this.toggleSoundClipStatus = this.toggleSoundClipStatus.bind(this);
   }
 
   componentDidMount() {
@@ -23,27 +24,40 @@ class App extends React.Component {
   }
 
   playSounds() {
-    const newState = {};
-    const {
-      drum1Active,
-    } = this.state;
-
-    if (drum1Active) {
-      newState.drum1PlayStatus = Sound.status.PLAYING;
-    }
-    this.setState(newState);
+    // activateQueuedForType(drum)
+    // activateQueuedForType(melody)
+    // activateQueuedForType(bass)
   }
 
-  toggleSongClipStatus(soundClip) {
+  // activateQueuedForType(type)
+    // create soundClipTypeLimits object, drum:1, melody:3, bass:1
+    // fetch everything queued and active for that type
+    // sort on time stamp
+    // slice on type limit
+    // set active for winners
+    // set inacative for losers
+
+
+  toggleSoundClipStatus(soundClip) {
     const soundClipStatusKey = soundClip += 'Status'
     const oldSoundClipStatus = this.state[soundClipStatusKey];
 
     if (oldSoundClipStatus === 'inactive') {
       this.setState({})
     }
+    // if inactive, set to queued
+    // run queue clearning funtion based on sound type limit
+    //
+    // already queued or active
+    // straight to inactive
   }
 
-  queued 
+  // queued clearning
+    //  take everything of sound type that is queued
+    // sort on last queued at
+    // slice on type limit
+    // set losers to inactive
+    
 
   render() {
     const { drum1PlayStatus } = this.state;
