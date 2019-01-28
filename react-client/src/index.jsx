@@ -35,11 +35,7 @@ class App extends React.Component {
   }
 
   activateQueuedForType(type) {
-    const soundClipTypeLimits = {
-      drum: 1,
-      melody: 3,
-      bass: 1
-    };
+    const soundClipTypeLimits = { drum: 1, melody: 3, bass: 1 };
     const queuedAndActiveTimeStamps = [];
 
     for (let i = 1; i <= 16; i += 1) {
@@ -50,24 +46,21 @@ class App extends React.Component {
         });
       }
     }
-    
-    // sort based on most recently launched
+
     queuedAndActiveTimeStamps.sort((a, b) => {
       return b.LastQueuedAt - a.LastQueuedAt;
     });
 
-    const setToActiveArray = queuedAndActiveTimeStamps.slice(0, soundClipTypeLimits[type]);
-    const setToInactiveArray = queuedAndActiveTimeStamps.slice(soundClipTypeLimits[type]);
-
-    console.log('active: ', setToActiveArray);
-    console.log('inactive: ', setToInactiveArray);
+    const toActivateArray = queuedAndActiveTimeStamps.slice(0, soundClipTypeLimits[type]);
+    const toInactivateArray = queuedAndActiveTimeStamps.slice(soundClipTypeLimits[type]);
 
     const activeSounds = {};
     const inactiveSounds = {};
-    setToActiveArray.forEach((soundClip) => {
+
+    toActivateArray.forEach((soundClip) => {
       activeSounds[`${soundClip.name}Status`] = 'active';
     });
-    setToInactiveArray.forEach((soundClip) => {
+    toInactivateArray.forEach((soundClip) => {
       inactiveSounds[`${soundClip.name}Status`] = 'inactive';
     });
 
