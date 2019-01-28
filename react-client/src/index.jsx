@@ -16,7 +16,7 @@ class App extends React.Component {
 
     this.playSounds = this.playSounds.bind(this);
     this.toggleSoundClipStatus = this.toggleSoundClipStatus.bind(this);
-    this.queuedCleaning = this.queuedCleaning.bind(this);
+    this.limitQueuedSoundClipTypeBySoundClip = this.limitQueuedSoundClipTypeBySoundClip.bind(this);
     this.activateQueuedForType = this.activateQueuedForType.bind(this);
   }
 
@@ -87,27 +87,58 @@ class App extends React.Component {
         [soundClipStatusKey]: 'queued',
         [soundClipLastQueuedAtKey]: Date.now(),
       });
+      
+      // move to end of event queue, able to recognize state already updated to queued
+      setTimeout(() => { this.limitQueuedSoundClipTypeBySoundClip(soundClip); }, 0);
+    }
 
-      this.queuedCleaning(soundClip);
+    if (oldSoundClipStatus === 'queued' || oldSoundClipStatus === 'active') {
+      this.setState({
+        [soundClipStatusKey]: 'inactive',
+      });
     }
 
     // if inactive, set to queued
-    // run queue clearning funtion based on sound type limit
+    // run queue cleaning funtion based on sound type limit
     //
     // already queued or active
     // straight to inactive
   }
 
+  // ensure only latest launched can remain queued, all else inactivate
+  limitQueuedSoundClipTypeBySoundClip(soundClip) {
+    const soundClipTypeLimits = { drum: 1, melody: 3, bass: 1 };
+    let soundClipType = '';
 
-  queuedCleaning(soundClip) {
-    console.log('cleaning')
-    let soundType = '';
-    let soundTypeLimit = null;
-    if (soundClip.startsWith('drum')) soundType = 'drum'; soundTypeLimit = 1;
-    if (soundClip.startsWith('melody')) soundType = 'melody'; soundTypeLimit = 3;
-    if (soundClip.startsWith('bass')) soundType = 'bass'; soundTypeLimit = 1;
+    if (soundClip.startsWith('drum')) soundClipType = 'drum';
+    if (soundClip.startsWith('melody')) soundClipType = 'melody';
+    if (soundClip.startsWith('bass')) soundClipType = 'bass';
 
-    console.log('TYPE AND LIMIT: ', soundType, soundTypeLimit);
+    // ----------------------- //
+
+    const queuedTimeStamps = [];
+
+    for (let i = 1; i <= 16; i += 1) {
+      if (this.state[`${soundClipType}${i}Status`] === 'queued') {
+        queuedTimeStamps.push({
+          name: `${soundClipType}${i}`,
+          LastQueuedAt: this.state[`${soundClipType}${i}LastQueuedAt`]
+        });
+      }
+    }
+
+    queuedTimeStamps.sort((a, b) => {
+      return b.LastQueuedAt - a.LastQueuedAt;
+    });
+
+    const toInactivateArray = queuedTimeStamps.slice(soundClipTypeLimits[soundClipType]);
+    const inactiveSounds = {};
+
+    toInactivateArray.forEach((queuedSoundClip) => {
+      inactiveSounds[`${queuedSoundClip.name}Status`] = 'inactive';
+    });
+
+    this.setState(inactiveSounds);
   }
 
   // queued cleaning 
