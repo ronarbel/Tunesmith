@@ -219,23 +219,23 @@ class App extends React.Component {
       bass4Status,
     } = this.state;
 
-    const drum1ClassName = `${drum1Status} `.concat('drum');
-    const drum2ClassName = `${drum2Status} `.concat('drum');
-    const drum3ClassName = `${drum3Status} `.concat('drum');
-    const drum4ClassName = `${drum4Status} `.concat('drum');
-    const melody1ClassName = `${melody1Status} `.concat('melody');
-    const melody2ClassName = `${melody2Status} `.concat('melody');
-    const melody3ClassName = `${melody3Status} `.concat('melody');
-    const melody4ClassName = `${melody4Status} `.concat('melody');
-    const melody5ClassName = `${melody5Status} `.concat('melody');
-    const melody6ClassName = `${melody6Status} `.concat('melody');
-    const melody7ClassName = `${melody7Status} `.concat('melody');
-    const melody8ClassName = `${melody8Status} `.concat('melody');
-    const melody9ClassName = `${melody9Status} `.concat('melody');
-    const bass1ClassName = `${bass1Status} `.concat('bass');
-    const bass2ClassName = `${bass2Status} `.concat('bass');
-    const bass3ClassName = `${bass3Status} `.concat('bass');
-    const bass4ClassName = `${bass4Status} `.concat('bass');
+    const drum1ClassName = `${drum1Status} `.concat('drum pad');
+    const drum2ClassName = `${drum2Status} `.concat('drum pad');
+    const drum3ClassName = `${drum3Status} `.concat('drum pad');
+    const drum4ClassName = `${drum4Status} `.concat('drum pad');
+    const melody1ClassName = `${melody1Status} `.concat('melody pad');
+    const melody2ClassName = `${melody2Status} `.concat('melody pad');
+    const melody3ClassName = `${melody3Status} `.concat('melody pad');
+    const melody4ClassName = `${melody4Status} `.concat('melody pad');
+    const melody5ClassName = `${melody5Status} `.concat('melody pad');
+    const melody6ClassName = `${melody6Status} `.concat('melody pad');
+    const melody7ClassName = `${melody7Status} `.concat('melody pad');
+    const melody8ClassName = `${melody8Status} `.concat('melody pad');
+    const melody9ClassName = `${melody9Status} `.concat('melody pad');
+    const bass1ClassName = `${bass1Status} `.concat('bass pad');
+    const bass2ClassName = `${bass2Status} `.concat('bass pad');
+    const bass3ClassName = `${bass3Status} `.concat('bass pad');
+    const bass4ClassName = `${bass4Status} `.concat('bass pad');
 
     const soundLinks = {
       drum1: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.6.ogg?1427136627194",
@@ -253,7 +253,7 @@ class App extends React.Component {
       melody9: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.9.ogg?1427136627194",
       bass1: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.1.ogg?1427136627194",
       bass2: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.2.ogg?1427136627194",
-      bass3: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.3.ogg?1427136627194",
+      bass3: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.5.ogg?1427136627194",
       bass4: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.4.ogg?1427136627194",
     };
     
@@ -428,7 +428,9 @@ class App extends React.Component {
             </div>
           </div>
         </div>
-        <button type="button" onClick={this.toggleDisplay}>Show Keyboard Controls</button>
+        <div>
+          <button type="button" className="showKeyboard" onClick={this.toggleDisplay}>Show Keyboard Controls</button>
+        </div>
       </div>
     );
   }
