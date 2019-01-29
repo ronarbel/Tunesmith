@@ -12,6 +12,8 @@ class App extends React.Component {
       drum2LastQueuedAt: null,
       drum3Status: 'inactive',
       drum3LastQueuedAt: null,
+      loopNumber: 0,
+      previousLoopNumber: 0,
     };
 
     this.playSounds = this.playSounds.bind(this);
@@ -21,7 +23,20 @@ class App extends React.Component {
   }
 
   componentDidMount() {
-    this.interval = setInterval(this.playSounds, 4363.628000000001);
+    let { loopNumber } = this.state;
+    const interval = 4363.628000000001;
+    
+    this.activateInterval = setInterval(this.playSounds, interval);
+    this.renderInterval = setInterval(() => { this.setState({ loopNumber: loopNumber += 1 }); }, interval);
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    let { previousLoopNumber } = this.state;
+    if (nextState.loopNumber > nextState.previousLoopNumber) {
+      this.setState({ previousLoopNumber: previousLoopNumber += 1 });
+      return true;
+    }
+    return false;
   }
 
   componentWillUnmount() {
