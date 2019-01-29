@@ -1,0 +1,54 @@
+.flex-container {
+  display: flex;
+  height: 500px;
+  justify-content: center;
+  align-items: center;
+}
+
+.top-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.middle-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.bottom-row {
+  display:flex;
+  flex-direction: row;
+}
+
+button {
+  border-radius: 10px;
+  margin: 5px;
+  padding: 0px;
+  height: 50px;
+  width: 50px;
+  justify-content: center;
+}
+
+.drum {
+  background-color: lightblue;
+}
+
+.melody {
+  background-color: lightsalmon;
+}
+
+.bass {
+  background-color: lightskyblue
+}
+
+.active {
+  color: red;
+}
+
+.inactive {
+  color: gray
+}
+
+.queued {
+  color: green
+}
