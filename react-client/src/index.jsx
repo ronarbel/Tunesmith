@@ -8,6 +8,7 @@ class App extends React.Component {
     this.state = {
       loopNumber: 0,
       previousLoopNumber: 0,
+      displayKeys: false,
       drum1Status: 'inactive',
       drum1LastQueuedAt: null,
       drum2Status: 'inactive',
@@ -47,6 +48,7 @@ class App extends React.Component {
     this.toggleSoundClipStatus = this.toggleSoundClipStatus.bind(this);
     this.limitQueuedSoundClipTypeBySoundClip = this.limitQueuedSoundClipTypeBySoundClip.bind(this);
     this.activateQueuedForType = this.activateQueuedForType.bind(this);
+    this.toggleDisplay = this.toggleDisplay.bind(this);
   }
 
   componentDidMount() {
@@ -190,8 +192,14 @@ class App extends React.Component {
     // slice on type limit
     // set losers to inactive
 
+    toggleDisplay() {
+      const { displayKeys } = this.state;
+      this.setState({ displayKeys: !displayKeys });
+    }
+
   render() {
     const {
+      displayKeys,
       drum1Status,
       drum2Status,
       drum3Status,
@@ -250,174 +258,177 @@ class App extends React.Component {
     };
     
     return (
-      <div id="player">
-        <div className="flex-container">
-          <div className="drums">
-            <div>
-              <button type="button" className={drum1ClassName} value="drum1" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Drum1 </button>
-              <Sound
-                url={soundLinks.drum1}
-                playStatus={drum1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                playFromPosition={0}
-                autoLoad={true}
-              />
-            </div>
-            <div>
-              <button type="button" className={drum2ClassName} value="drum2" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Drum2 </button>
-              <Sound
-                url={soundLinks.drum2}
-                playStatus={drum2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                playFromPosition={0}
-                autoLoad={true}
-              />
-            </div>
-            <div>
-              <button type="button" className={drum3ClassName} value="drum3" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Drum3 </button>
-              <Sound
-                url={soundLinks.drum3}
-                playStatus={drum3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                playFromPosition={0}
-                autoLoad={true}
-              />
-            </div>
-            <div>
-              <button type="button" className={drum4ClassName} value="drum4" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Drum4 </button>
-              <Sound
-                url={soundLinks.drum4}
-                playStatus={drum4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                playFromPosition={0}
-                autoLoad={true}
-              />
-            </div>
-          </div>
-          <div className="melodies grid-container">
-            <div className="top-row">
+      <div id="app">
+        <div id="player">
+          <div className="flex-container">
+            <div className="drums">
               <div>
-                <button type="button" className={melody1ClassName} value="melody1" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody1 </button>
+                <button type="button" className={drum1ClassName} value="drum1" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('3') : ('')}</button>
                 <Sound
-                  url={soundLinks.melody1}
-                  playStatus={melody1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                  url={soundLinks.drum1}
+                  playStatus={drum1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
                   playFromPosition={0}
                   autoLoad={true}
                 />
               </div>
               <div>
-                <button type="button" className={melody2ClassName} value="melody2" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody2 </button>
+                <button type="button" className={drum2ClassName} value="drum2" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('E') : ('')}</button>
                 <Sound
-                  url={soundLinks.melody2}
-                  playStatus={melody2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                  url={soundLinks.drum2}
+                  playStatus={drum2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
                   playFromPosition={0}
                   autoLoad={true}
                 />
               </div>
               <div>
-                <button type="button" className={melody3ClassName} value="melody3" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody3 </button>
+                <button type="button" className={drum3ClassName} value="drum3" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('D') : ('')}</button>
                 <Sound
-                  url={soundLinks.melody3}
-                  playStatus={melody3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                  url={soundLinks.drum3}
+                  playStatus={drum3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                  playFromPosition={0}
+                  autoLoad={true}
+                />
+              </div>
+              <div>
+                <button type="button" className={drum4ClassName} value="drum4" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('C') : ('')}</button>
+                <Sound
+                  url={soundLinks.drum4}
+                  playStatus={drum4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
                   playFromPosition={0}
                   autoLoad={true}
                 />
               </div>
             </div>
-            <div className="middle-row">
-              <div>
-                <button type="button" className={melody4ClassName} value="melody4" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody4 </button>
-                <Sound
-                  url={soundLinks.melody4}
-                  playStatus={melody4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
+            <div className="melodies grid-container">
+              <div className="top-row">
+                <div>
+                  <button type="button" className={melody1ClassName} value="melody1" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('R') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody1}
+                    playStatus={melody1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
+                <div>
+                  <button type="button" className={melody2ClassName} value="melody2" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('T') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody2}
+                    playStatus={melody2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
+                <div>
+                  <button type="button" className={melody3ClassName} value="melody3" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('Y') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody3}
+                    playStatus={melody3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
               </div>
-              <div>
-                <button type="button" className={melody5ClassName} value="melody5" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody5 </button>
-                <Sound
-                  url={soundLinks.melody5}
-                  playStatus={melody5Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
+              <div className="middle-row">
+                <div>
+                  <button type="button" className={melody4ClassName} value="melody4" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('F') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody4}
+                    playStatus={melody4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
+                <div>
+                  <button type="button" className={melody5ClassName} value="melody5" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('G') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody5}
+                    playStatus={melody5Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
+                <div>
+                  <button type="button" className={melody6ClassName} value="melody6" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('H') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody6}
+                    playStatus={melody6Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
               </div>
-              <div>
-                <button type="button" className={melody6ClassName} value="melody6" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody6 </button>
-                <Sound
-                  url={soundLinks.melody6}
-                  playStatus={melody6Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
+              <div className="bottom-row">
+                <div>
+                  <button type="button" className={melody7ClassName} value="melody7" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('V') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody7}
+                    playStatus={melody7Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
+                <div>
+                  <button type="button" className={melody8ClassName} value="melody8" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('B') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody8}
+                    playStatus={melody8Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
+                <div>
+                  <button type="button" className={melody9ClassName} value="melody9" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('N') : ('')}</button>
+                  <Sound
+                    url={soundLinks.melody9}
+                    playStatus={melody9Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                    playFromPosition={0}
+                    autoLoad={true}
+                  />
+                </div>
               </div>
             </div>
-            <div className="bottom-row">
+            <div className="basses grid-container">
               <div>
-                <button type="button" className={melody7ClassName} value="melody7" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody7 </button>
+                <button type="button" className={bass1ClassName} value="bass1" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('7') : ('')}</button>
                 <Sound
-                  url={soundLinks.melody7}
-                  playStatus={melody7Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                  url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.1.ogg?1427136627194"
+                  playStatus={bass1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
                   playFromPosition={0}
                   autoLoad={true}
                 />
               </div>
               <div>
-                <button type="button" className={melody8ClassName} value="melody8" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody8 </button>
+                <button type="button" className={bass2ClassName} value="bass2" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('U') : ('')}</button>
                 <Sound
-                  url={soundLinks.melody8}
-                  playStatus={melody8Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                  url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.2.ogg?1427136627194"
+                  playStatus={bass2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
                   playFromPosition={0}
                   autoLoad={true}
                 />
               </div>
               <div>
-                <button type="button" className={melody9ClassName} value="melody9" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Melody9 </button>
+                <button type="button" className={bass3ClassName} value="bass3" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('J') : ('')}</button>
                 <Sound
-                  url={soundLinks.melody9}
-                  playStatus={melody9Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                  url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.3.ogg?1427136627194"
+                  playStatus={bass3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
                   playFromPosition={0}
                   autoLoad={true}
                 />
               </div>
-            </div>
-          </div>
-          <div className="basses grid-container">
-            <div>
-              <button type="button" className={bass1ClassName} value="bass1" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Bass1 </button>
-              <Sound
-                url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.1.ogg?1427136627194"
-                playStatus={bass1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                playFromPosition={0}
-                autoLoad={true}
-              />
-            </div>
-            <div>
-              <button type="button" className={bass2ClassName} value="bass2" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Bass2 </button>
-              <Sound
-                url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.2.ogg?1427136627194"
-                playStatus={bass2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                playFromPosition={0}
-                autoLoad={true}
-              />
-            </div>
-            <div>
-              <button type="button" className={bass3ClassName} value="bass3" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Bass2 </button>
-              <Sound
-                url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.3.ogg?1427136627194"
-                playStatus={bass3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                playFromPosition={0}
-                autoLoad={true}
-              />
-            </div>
-            <div>
-              <button type="button" className={bass4ClassName} value="bass4" onClick={e => this.toggleSoundClipStatus(e.target.value)}> Bass4 </button>
-              <Sound
-                url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.4.ogg?1427136627194"
-                playStatus={bass4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                playFromPosition={0}
-                autoLoad={true}
-              />
+              <div>
+                <button type="button" className={bass4ClassName} value="bass4" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('M') : ('')}</button>
+                <Sound
+                  url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.4.ogg?1427136627194"
+                  playStatus={bass4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+                  playFromPosition={0}
+                  autoLoad={true}
+                />
+              </div>
             </div>
           </div>
         </div>
+        <button type="button" onClick={this.toggleDisplay}>Show Keyboard Controls</button>
       </div>
     );
   }
