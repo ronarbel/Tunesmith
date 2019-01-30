@@ -20,6 +20,13 @@ class App extends React.Component {
         soundLink: "http://madeonsoundlink.ogg.drum.1.2.1"
         type: drum,
       }
+
+      updateLastQueuedAt(soundClip)
+        const newProfile = {...oldProfile, lastQueuedAt: Date.now() };
+        this.setState({oldProfile: newProfile})
+
+
+      Pass profile into sound builder. Hopefully won't update child component when different state is updated.
       */
       drum1Status: 'inactive',
       drum1LastQueuedAt: null,
