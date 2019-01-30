@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Sound from 'react-sound';
+import Pad from './components/Pad.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -9,63 +9,164 @@ class App extends React.Component {
       loopNumber: 0,
       previousLoopNumber: 0,
       displayKeys: false,
-
-      /*
-      
-      drum1: {
+      drum1Profile: {
+        name: 'drum1',
         status: 'inactive',
         lastQueuedAt: null,
-        keyBinding: 'Q',
-        keyBindingNumber: '17'
-        soundLink: "http://madeonsoundlink.ogg.drum.1.2.1"
-        type: drum,
-      }
-
-      updateLastQueuedAt(soundClip)
-        const newProfile = {...oldProfile, lastQueuedAt: Date.now() };
-        this.setState({oldProfile: newProfile})
-
-
-      Pass profile into sound builder. Hopefully won't update child component when different state is updated.
-      */
-      drum1Status: 'inactive',
-      drum1LastQueuedAt: null,
-      drum2Status: 'inactive',
-      drum2LastQueuedAt: null,
-      drum3Status: 'inactive',
-      drum3LastQueuedAt: null,
-      drum4Status: 'inactive',
-      drum4LastQueuedAt: null,
-      melody1Status: 'inactive',
-      melody1LastQueuedAt: null,
-      melody2Status: 'inactive',
-      melody2LastQueuedAt: null,
-      melody3Status: 'inactive',
-      melody3LastQueuedAt: null,
-      melody4Status: 'inactive',
-      melody4LastQueuedAt: null,
-      melody5Status: 'inactive',
-      melody5LastQueuedAt: null,
-      melody6Status: 'inactive',
-      melody6LastQueuedAt: null,
-      melody7Status: 'inactive',
-      melody7LastQueuedAt: null,
-      melody8Status: 'inactive',
-      melody8LastQueuedAt: null,
-      melody9Status: 'inactive',
-      bass1Status: 'inactive',
-      bass1LastQueuedAt: null,
-      bass2Status: 'inactive',
-      bass2LastQueuedAt: null,
-      bass3Status: 'inactive',
-      bass3LastQueuedAt: null,
-      bass4Status: 'inactive',
-      bass4LastQueuedAt: null,
+        keyBinding: '3',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.6.ogg?1427136627194",
+        type: 'drum',
+      },
+      drum2Profile: {
+        name: 'drum2',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'E',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.4.ogg?1427136627194",
+        type: 'drum',
+      },
+      drum3Profile: {
+        name: 'drum3',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'D',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.2.ogg?1427136627194",
+        type: 'drum',
+      },
+      drum4Profile: {
+        name: 'drum4',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'C',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.3.ogg?1427136627194",
+        type: 'drum',
+      },
+      melody1Profile: {
+        name: 'melody1',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'R',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.1.ogg?1427136627194",
+        type: 'melody',
+      },
+      melody2Profile: {
+        name: 'melody2',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'F',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.11.ogg?1427136627194",
+        type: 'melody',
+      },
+      melody3Profile: {
+        name: 'melody3',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'V',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.10.ogg?1427136627194",
+        type: 'melody',
+      },
+      melody4Profile: {
+        name: 'melody4',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'T',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.4.ogg?1427136627194",
+        type: 'melody',
+      },
+      melody5Profile: {
+        name: 'melody5',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'G',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.5.ogg?1427136627194",
+        type: 'melody',
+      },
+      melody6Profile: {
+        name: 'melody6',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'B',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.6.ogg?1427136627194",
+        type: 'melody',
+      },
+      melody7Profile: {
+        name: 'melody7',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'Y',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.7.ogg?1427136627194",
+        type: 'melody',
+      },
+      melody8Profile: {
+        name: 'melody8',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'H',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.8.ogg?1427136627194",
+        type: 'modely',
+      },
+      melody9Profile: {
+        name: 'melody9',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'N',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.9.ogg?1427136627194",
+        type: 'melody',
+      },
+      bass1Profile: {
+        name: 'bass1',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: '7',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.1.ogg?1427136627194",
+        type: 'bass',
+      },
+      bass2Profile: {
+        name: 'bass2',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'U',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.2.ogg?1427136627194",
+        type: 'bass',
+      },
+      bass3Profile: {
+        name: 'bass3',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'J',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.5.ogg?1427136627194",
+        type: 'bass',
+      },
+      bass4Profile: {
+        name: 'bass4',
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'M',
+        keyBindingNumber: '17',
+        soundLink: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.4.ogg?1427136627194",
+        type: 'bass',
+      },
     };
 
     this.activateSounds = this.activateSounds.bind(this);
     this.toggleSoundClipStatus = this.toggleSoundClipStatus.bind(this);
-    this.limitQueuedSoundClipTypeBySoundClip = this.limitQueuedSoundClipTypeBySoundClip.bind(this);
+    this.limitQueuedByType = this.limitQueuedByType.bind(this);
     this.activateQueuedForType = this.activateQueuedForType.bind(this);
     this.toggleDisplay = this.toggleDisplay.bind(this);
   }
@@ -78,14 +179,14 @@ class App extends React.Component {
     this.updateLoopNumber = setInterval(() => { this.setState({ loopNumber: loopNumber += 1 }); }, interval);
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    let { previousLoopNumber } = this.state;
-    if (nextState.loopNumber > nextState.previousLoopNumber) {
-      this.setState({ previousLoopNumber: previousLoopNumber += 1 });
-      return true;
-    }
-    return false;
-  }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   let { previousLoopNumber } = this.state;
+  //   if (nextState.loopNumber > nextState.previousLoopNumber) {
+  //     this.setState({ previousLoopNumber: previousLoopNumber += 1 });
+  //     return true;
+  //   }
+  //   return false;
+  // }
 
   componentWillUnmount() {
     clearInterval(this.updateActiveSounds);
@@ -132,54 +233,29 @@ class App extends React.Component {
     this.setState(inactiveSounds);
   }
 
-  // activateQueuedForType(type)
-    // create soundClipTypeLimits object, drum:1, melody:3, bass:1
-    // fetch everything queued and active for that type
-    // sort on time stamp
-    // slice on type limit
-    // set active for winners
-    // set inacative for losers
+  toggleSoundClipStatus(soundClipProfile) {
+    const oldProfile = this.state[soundClipProfile];
+    
+    if (oldProfile.status === 'inactive') {
+      console.log(typeof oldProfile);
+      const newProfile = { ...oldProfile };
+      // newProfile.lastQueuedAt = Date.now();
+      // this.setState({ newProfile });
 
-  
-  toggleSoundClipStatus(soundClip) {
-    const soundClipStatusKey = soundClip.slice().concat('Status');
-    const soundClipLastQueuedAtKey = soundClip.slice().concat('LastQueuedAt');
-    const oldSoundClipStatus = this.state[soundClipStatusKey];
-
-    if (oldSoundClipStatus === 'inactive') {
-      this.setState({
-        [soundClipStatusKey]: 'queued',
-        [soundClipLastQueuedAtKey]: Date.now(),
-      });
-      
       // move to end of event queue, able to recognize state already updated to queued
-      setTimeout(() => { this.limitQueuedSoundClipTypeBySoundClip(soundClip); }, 0);
+      setTimeout(() => { this.limitQueuedByType(soundClipProfile.type); }, 0);
     }
 
-    if (oldSoundClipStatus === 'queued' || oldSoundClipStatus === 'active') {
-      this.setState({
-        [soundClipStatusKey]: 'inactive',
-      });
+    if (oldProfile.status === 'queued' || oldProfile.status === 'active') {
+      // const newProfile = { ...oldProfile, status: 'inactive' };
+      // this.setState({ newProfile });
     }
-
-    // if inactive, set to queued
-    // run queue cleaning funtion based on sound type limit
-    //
-    // already queued or active
-    // straight to inactive
   }
 
-  // ensure only latest launched can remain queued, all else inactivate
-  limitQueuedSoundClipTypeBySoundClip(soundClip) {
+  limitQueuedByType(soundClipType) {
     const soundClipTypeLimits = { drum: 1, melody: 3, bass: 1 };
-    let soundClipType = '';
 
-    if (soundClip.startsWith('drum')) soundClipType = 'drum';
-    if (soundClip.startsWith('melody')) soundClipType = 'melody';
-    if (soundClip.startsWith('bass')) soundClipType = 'bass';
-
-    // ----------------------- //
-
+    console.log(soundClipType)
     const queuedTimeStamps = [];
 
     for (let i = 1; i <= 16; i += 1) {
@@ -205,246 +281,65 @@ class App extends React.Component {
     this.setState(inactiveSounds);
   }
 
-  // queued cleaning 
-    //  take everything of sound type that is queued
-    // sort on last queued at
-    // slice on type limit
-    // set losers to inactive
-
-    toggleDisplay() {
-      const { displayKeys } = this.state;
-      this.setState({ displayKeys: !displayKeys });
-    }
+  toggleDisplay() {
+    const { displayKeys } = this.state;
+    this.setState({ displayKeys: !displayKeys });
+  }
 
   render() {
     const {
       displayKeys,
-      drum1Status,
-      drum2Status,
-      drum3Status,
-      drum4Status,
-      melody1Status,
-      melody2Status,
-      melody3Status,
-      melody4Status,
-      melody5Status,
-      melody6Status,
-      melody7Status,
-      melody8Status,
-      melody9Status,
-      bass1Status,
-      bass2Status,
-      bass3Status,
-      bass4Status,
+      drum1Profile,
+      drum2Profile,
+      drum3Profile,
+      drum4Profile,
+      melody1Profile,
+      melody2Profile,
+      melody3Profile,
+      melody4Profile,
+      melody5Profile,
+      melody6Profile,
+      melody7Profile,
+      melody8Profile,
+      melody9Profile,
+      bass1Profile,
+      bass2Profile,
+      bass3Profile,
+      bass4Profile,
     } = this.state;
-
-    const drum1ClassName = `${drum1Status} `.concat('drum pad');
-    const drum2ClassName = `${drum2Status} `.concat('drum pad');
-    const drum3ClassName = `${drum3Status} `.concat('drum pad');
-    const drum4ClassName = `${drum4Status} `.concat('drum pad');
-    const melody1ClassName = `${melody1Status} `.concat('melody pad');
-    const melody2ClassName = `${melody2Status} `.concat('melody pad');
-    const melody3ClassName = `${melody3Status} `.concat('melody pad');
-    const melody4ClassName = `${melody4Status} `.concat('melody pad');
-    const melody5ClassName = `${melody5Status} `.concat('melody pad');
-    const melody6ClassName = `${melody6Status} `.concat('melody pad');
-    const melody7ClassName = `${melody7Status} `.concat('melody pad');
-    const melody8ClassName = `${melody8Status} `.concat('melody pad');
-    const melody9ClassName = `${melody9Status} `.concat('melody pad');
-    const bass1ClassName = `${bass1Status} `.concat('bass pad');
-    const bass2ClassName = `${bass2Status} `.concat('bass pad');
-    const bass3ClassName = `${bass3Status} `.concat('bass pad');
-    const bass4ClassName = `${bass4Status} `.concat('bass pad');
-
-    const soundLinks = {
-      drum1: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.6.ogg?1427136627194",
-      drum2: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.4.ogg?1427136627194",
-      drum3: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.2.ogg?1427136627194",
-      drum4: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/drum.1.3.ogg?1427136627194",
-      melody1: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.1.ogg?1427136627194",
-      melody2: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.11.ogg?1427136627194",
-      melody3: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.10.ogg?1427136627194",
-      melody4: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.4.ogg?1427136627194",
-      melody5: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.5.ogg?1427136627194",
-      melody6: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.6.ogg?1427136627194",
-      melody7: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.7.ogg?1427136627194",
-      melody8: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.8.ogg?1427136627194",
-      melody9: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/sounds.1.9.ogg?1427136627194",
-      bass1: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.1.ogg?1427136627194",
-      bass2: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.2.ogg?1427136627194",
-      bass3: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.5.ogg?1427136627194",
-      bass4: "https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.4.ogg?1427136627194",
-    };
     
     return (
       <div id="app">
         <div id="player">
           <div className="flex-container">
             <div className="drums">
-              <div>
-                {/*<Pad profile={this.state.drum1} playing=this.state.drum1.playing/> */}
-                <button type="button" className={drum1ClassName} value="drum1" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('3') : ('')}</button>
-                <Sound
-                  url={soundLinks.drum1}
-                  playStatus={drum1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
-              </div>
-              <div>
-                <button type="button" className={drum2ClassName} value="drum2" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('E') : ('')}</button>
-                <Sound
-                  url={soundLinks.drum2}
-                  playStatus={drum2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
-              </div>
-              <div>
-                <button type="button" className={drum3ClassName} value="drum3" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('D') : ('')}</button>
-                <Sound
-                  url={soundLinks.drum3}
-                  playStatus={drum3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
-              </div>
-              <div>
-                <button type="button" className={drum4ClassName} value="drum4" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('C') : ('')}</button>
-                <Sound
-                  url={soundLinks.drum4}
-                  playStatus={drum4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
-              </div>
+              <Pad profile={drum1Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+              <Pad profile={drum2Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+              <Pad profile={drum3Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+              <Pad profile={drum4Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
             </div>
             <div className="melodies grid-container">
               <div className="top-row">
-                <div>
-                  <button type="button" className={melody1ClassName} value="melody1" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('R') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody1}
-                    playStatus={melody1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
-                <div>
-                  <button type="button" className={melody2ClassName} value="melody2" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('T') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody2}
-                    playStatus={melody2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
-                <div>
-                  <button type="button" className={melody3ClassName} value="melody3" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('Y') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody3}
-                    playStatus={melody3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
+                <Pad profile={melody1Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+                <Pad profile={melody2Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+                <Pad profile={melody3Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
               </div>
               <div className="middle-row">
-                <div>
-                  <button type="button" className={melody4ClassName} value="melody4" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('F') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody4}
-                    playStatus={melody4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
-                <div>
-                  <button type="button" className={melody5ClassName} value="melody5" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('G') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody5}
-                    playStatus={melody5Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
-                <div>
-                  <button type="button" className={melody6ClassName} value="melody6" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('H') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody6}
-                    playStatus={melody6Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
+                <Pad profile={melody4Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+                <Pad profile={melody5Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+                <Pad profile={melody6Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
               </div>
               <div className="bottom-row">
-                <div>
-                  <button type="button" className={melody7ClassName} value="melody7" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('V') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody7}
-                    playStatus={melody7Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
-                <div>
-                  <button type="button" className={melody8ClassName} value="melody8" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('B') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody8}
-                    playStatus={melody8Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
-                <div>
-                  <button type="button" className={melody9ClassName} value="melody9" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('N') : ('')}</button>
-                  <Sound
-                    url={soundLinks.melody9}
-                    playStatus={melody9Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                    playFromPosition={0}
-                    autoLoad={true}
-                  />
-                </div>
+                <Pad profile={melody7Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+                <Pad profile={melody8Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+                <Pad profile={melody9Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
               </div>
             </div>
             <div className="basses grid-container">
-              <div>
-                <button type="button" className={bass1ClassName} value="bass1" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('7') : ('')}</button>
-                <Sound
-                  url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.1.ogg?1427136627194"
-                  playStatus={bass1Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
-              </div>
-              <div>
-                <button type="button" className={bass2ClassName} value="bass2" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('U') : ('')}</button>
-                <Sound
-                  url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.2.ogg?1427136627194"
-                  playStatus={bass2Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
-              </div>
-              <div>
-                <button type="button" className={bass3ClassName} value="bass3" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('J') : ('')}</button>
-                <Sound
-                  url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.3.ogg?1427136627194"
-                  playStatus={bass3Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
-              </div>
-              <div>
-                <button type="button" className={bass4ClassName} value="bass4" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('M') : ('')}</button>
-                <Sound
-                  url="https://www.madeon.fr/adventuremachine/wmas/assets/audio/bass.1.4.ogg?1427136627194"
-                  playStatus={bass4Status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
-                  playFromPosition={0}
-                  autoLoad={true}
-                />
-              </div>
+              <Pad profile={bass1Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+              <Pad profile={bass2Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+              <Pad profile={bass3Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
+              <Pad profile={bass4Profile} displayKeys={displayKeys} toggle={this.toggleSoundClipStatus} />
             </div>
           </div>
         </div>
