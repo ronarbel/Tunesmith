@@ -1,6 +1,6 @@
 body {
   /* background-image: url("../../backgrounds/synthwave-city-retro-neon-4k-se.jpg"); */
-  background-image: url("https://i.redd.it/a97e5ifhr1iy.gif");
+  background: url("https://i.redd.it/a97e5ifhr1iy.gif");
   background-repeat: no-repeat;
   background-attachment: fixed; 
   background-position: center;
@@ -9,7 +9,7 @@ body {
 
 .flex-container {
   display: flex;
-  height: 500px;
+  height: 450px;
   justify-content: center;
   align-items: center;
 }
@@ -29,21 +29,30 @@ body {
   flex-direction: row;
 }
 
-button {
-  border-radius: 10px;
+.drums {
   margin: 5px;
+}
+
+.basses {
+  margin: 5px;
+}
+
+.pad {
+  border-radius: 10px;
+  margin: 3px;
   padding: 0px;
   height: 50px;
   width: 50px;
   justify-content: center;
   box-shadow: 0 15px 15px rgba(145, 92, 182, .4);
+  border: none;
 }
 
 button:focus {
   outline: 0;
 }
 
-button:hover {
+.pad:hover {
   box-shadow: 0px 20px 50px rgba(145, 92, 182, .4);
   margin-top: 10px;
 }
@@ -51,10 +60,13 @@ button:hover {
 .showKeyboard {
   display: flex;
   align-self: center;
+  border-radius: 3px;
+  width: 70px;
+  justify-content: center;
 }
 
 .drum {
-  background-color: lightblue;
+  background-color: lightblue; 
 }
 
 .melody {
@@ -66,11 +78,35 @@ button:hover {
 }
 
 .active {
-  background-color: red;
+  background-color: rgb(222, 74, 104);
+  transition: all 0.2s ease-in-out;
+  animation: pulse 4363.628ms infinite;
+}
+
+@keyframes pulse {
+  0% {
+    background-color: rgb(250, 77, 137);
+  }
+
+  25% {
+    background-color: rgb(250, 77, 215);
+  }
+
+  50% {
+    background-color: rgb(250, 77, 215);
+  }
+
+  75% {
+    background-color: rgb(250, 77, 215);
+  }
+
+  100% {
+    background-color: rgb(250, 77, 137);
+  }
 }
 
 .inactive {
-  color: 
+  opacity: 1;
 }
 
 .queued {
@@ -88,7 +124,7 @@ button:hover {
   margin: 4px;
   height: 50px;
   width: 50px;
-  border-radius: 2px;
+  border-radius: 3px;
   
   color: $brown;
   font-family: arial;

@@ -9,6 +9,18 @@ class App extends React.Component {
       loopNumber: 0,
       previousLoopNumber: 0,
       displayKeys: false,
+
+      /*
+      
+      drum1: {
+        status: 'inactive',
+        lastQueuedAt: null,
+        keyBinding: 'Q',
+        keyBindingNumber: '17'
+        soundLink: "http://madeonsoundlink.ogg.drum.1.2.1"
+        type: drum,
+      }
+      */
       drum1Status: 'inactive',
       drum1LastQueuedAt: null,
       drum2Status: 'inactive',
@@ -263,6 +275,7 @@ class App extends React.Component {
           <div className="flex-container">
             <div className="drums">
               <div>
+                {/*<Pad profile={this.state.drum1} playing=this.state.drum1.playing/> */}
                 <button type="button" className={drum1ClassName} value="drum1" onClick={e => this.toggleSoundClipStatus(e.target.value)}>{displayKeys ? ('3') : ('')}</button>
                 <Sound
                   url={soundLinks.drum1}
@@ -429,7 +442,7 @@ class App extends React.Component {
           </div>
         </div>
         <div>
-          <button type="button" className="showKeyboard" onClick={this.toggleDisplay}>Show Keyboard Controls</button>
+          <button type="button" className="showKeyboard" onClick={this.toggleDisplay}>Keyboard Controls</button>
         </div>
       </div>
     );
