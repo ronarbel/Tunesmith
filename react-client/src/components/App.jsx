@@ -165,7 +165,7 @@ class App extends React.Component {
 
     this.activateSounds = this.activateSounds.bind(this);
     this.toggleSoundClipStatus = this.toggleSoundClipStatus.bind(this);
-    this.limitQueuedSoundClipTypeBySoundClip = this.limitQueuedSoundClipTypeBySoundClip.bind(this);
+    this.limitQueuedSoundClipByType = this.limitQueuedSoundClipByType.bind(this);
     this.activateQueuedForType = this.activateQueuedForType.bind(this);
     this.toggleDisplay = this.toggleDisplay.bind(this);
   }
@@ -231,31 +231,33 @@ class App extends React.Component {
     this.setState(activeSounds);
     this.setState(inactiveSounds);
   }
-  
-  toggleSoundClipStatus(soundClip) {
-    const soundClipStatusKey = soundClip.slice().concat('Status');
-    const soundClipLastQueuedAtKey = soundClip.slice().concat('LastQueuedAt');
-    const oldSoundClipStatus = this.state[soundClipStatusKey];
 
-    if (oldSoundClipStatus === 'inactive') {
-      this.setState({
-        [soundClipStatusKey]: 'queued',
-        [soundClipLastQueuedAtKey]: Date.now(),
-      });
-      
-      // move to end of event queue, able to recognize state already updated to queued
-      setTimeout(() => { this.limitQueuedSoundClipTypeBySoundClip(soundClip); }, 0);
+  toggleSoundClipStatus(soundClip) {
+    const oldProfile = this.state[soundClip];
+
+    if (oldProfile.status === 'inactive') {
+      const newProfile = Object.assign({}, oldProfile);
+      newProfile.status = 'queued';
+      newProfile.lastQueuedAt = Date.now();
+
+      this.setState(
+        { [soundClip]: newProfile },
+        this.limitQueuedSoundClipByType(newProfile.type),
+      );
     }
 
-    if (oldSoundClipStatus === 'queued' || oldSoundClipStatus === 'active') {
-      this.setState({
-        [soundClipStatusKey]: 'inactive',
-      });
+    if (oldProfile.status === 'queued' || oldProfile.status === 'active') {
+      const newProfile = Object.assign({}, oldProfile);
+      newProfile.status = 'inactive';
+
+      this.setState({ [soundClip]: newProfile });
     }
   }
 
   // ensure only latest launched can remain queued, all else inactivate
-  limitQueuedSoundClipTypeBySoundClip(soundClip) {
+  // REFACTOR BY TYPE!!
+  limitQueuedSoundClipByType(limitType) {
+    // Refactor below
     const soundClipTypeLimits = { drum: 1, melody: 3, bass: 1 };
     let soundClipType = '';
 
