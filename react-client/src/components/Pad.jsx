@@ -1,25 +1,34 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Sound from 'react-sound';
 
-const Pad = ({ profile, displayKeys, toggle }) => {
+const Pad = ({ profile, toggleSoundClipStatus, displayKeys }) => {
+  const { status, type, id, soundLink, keyBinding } = profile;
+
   return (
-    <div className="pad" key={`${profile.name}`}>
+    <div className="pad">
       <button
         type="button"
-        className={`${profile.status} ${profile.type} pad`}
-        value={`${profile.name}Profile`}
-        onClick={e => toggle(e.target.value)}
+        className={`${status} ${type} pad`}
+        value={id}
+        onClick={e => toggleSoundClipStatus(e.target.value)}
       >
-        {displayKeys ? ('3') : ('')}
+        {displayKeys ? ({ keyBinding }) : ('')}
       </button>
       <Sound
-        url={profile.soundLink}
-        playStatus={profile.status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
+        url={soundLink}
+        playStatus={status === 'active' ? (Sound.status.PLAYING) : (Sound.status.STOPPED)}
         playFromPosition={0}
-        autoLoad={true}
+        autoLoad
       />
     </div>
   );
+};
+
+Pad.propTypes = {
+  profile: PropTypes.instanceOf(Object).isRequired,
+  toggleSoundClipStatus: PropTypes.func.isRequired,
+  displayKeys: PropTypes.bool.isRequired,
 };
 
 export default Pad;
