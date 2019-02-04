@@ -166,7 +166,6 @@ class App extends React.Component {
     this.activateSounds = this.activateSounds.bind(this);
     this.toggleSoundClipStatus = this.toggleSoundClipStatus.bind(this);
     this.limitQueuedSoundClipByType = this.limitQueuedSoundClipByType.bind(this);
-    this.activateQueuedForType = this.activateQueuedForType.bind(this);
     this.toggleDisplay = this.toggleDisplay.bind(this);
   }
 
@@ -192,46 +191,28 @@ class App extends React.Component {
     clearInterval(this.updateLoopNumber);
   }
 
+  // for everything in queued, change to active
   activateSounds() {
-    this.activateQueuedForType('drum');
-    this.activateQueuedForType('melody');
-    this.activateQueuedForType('bass');
+    const { drum1, drum2, drum3, drum4, melody1, melody2, melody3, melody4, melody5, melody6, melody7, melody8, melody9, bass1, bass2, bass3, bass4 } = this.state;
+    const profiles = [drum1, drum2, drum3, drum4, melody1, melody2, melody3, melody4, melody5, melody6, melody7, melody8, melody9, bass1, bass2, bass3, bass4];
+
+    const toActiveProfiles = profiles.filter((profile) => {
+      return profile.status === 'queued';
+    });
+
+    const activeProfiles = {};
+    toActiveProfiles.forEach((profile) => {
+      const oldProfile = this.state[profile.id];
+      const newProfile = Object.assign({}, oldProfile);
+
+      newProfile.status = 'active';
+      activeProfiles[newProfile.id] = newProfile;
+    });
+
+    this.setState(activeProfiles);
   }
 
-  activateQueuedForType(type) {
-    const soundClipTypeLimits = { drum: 1, melody: 3, bass: 1 };
-    const queuedAndActiveTimeStamps = [];
-
-    for (let i = 1; i <= 16; i += 1) {
-      if (this.state[`${type}${i}Status`] === 'queued' || this.state[`${type}${i}Status`] === 'active') {
-        queuedAndActiveTimeStamps.push({
-          name: `${type}${i}`,
-          LastQueuedAt: this.state[`${type}${i}LastQueuedAt`]
-        });
-      }
-    }
-
-    queuedAndActiveTimeStamps.sort((a, b) => {
-      return b.LastQueuedAt - a.LastQueuedAt;
-    });
-
-    const toActivateArray = queuedAndActiveTimeStamps.slice(0, soundClipTypeLimits[type]);
-    const toInactivateArray = queuedAndActiveTimeStamps.slice(soundClipTypeLimits[type]);
-
-    const activeSounds = {};
-    const inactiveSounds = {};
-
-    toActivateArray.forEach((soundClip) => {
-      activeSounds[`${soundClip.name}Status`] = 'active';
-    });
-    toInactivateArray.forEach((soundClip) => {
-      inactiveSounds[`${soundClip.name}Status`] = 'inactive';
-    });
-
-    this.setState(activeSounds);
-    this.setState(inactiveSounds);
-  }
-
+  // on click, change profile status to 'queued' or back to inactive.
   toggleSoundClipStatus(soundClip) {
     const oldProfile = this.state[soundClip];
 
@@ -241,9 +222,9 @@ class App extends React.Component {
       newProfile.lastQueuedAt = Date.now();
 
       this.setState(
-        { [soundClip]: newProfile },
-        this.limitQueuedSoundClipByType(newProfile.type),
+        { [soundClip]: newProfile }
       );
+      setTimeout(() => this.limitQueuedSoundClipByType(newProfile.type), 0);
     }
 
     if (oldProfile.status === 'queued' || oldProfile.status === 'active') {
@@ -254,42 +235,32 @@ class App extends React.Component {
     }
   }
 
-  // ensure only latest launched can remain queued, all else inactivate
-  // REFACTOR BY TYPE!!
-  limitQueuedSoundClipByType(limitType) {
-    // Refactor below
+  // ensure only latest launched can remain queued, all else return to inactivate
+  limitQueuedSoundClipByType(filterType) {
     const soundClipTypeLimits = { drum: 1, melody: 3, bass: 1 };
-    let soundClipType = '';
+    const { drum1, drum2, drum3, drum4, melody1, melody2, melody3, melody4, melody5, melody6, melody7, melody8, melody9, bass1, bass2, bass3, bass4 } = this.state;
+    const profiles = [drum1, drum2, drum3, drum4, melody1, melody2, melody3, melody4, melody5, melody6, melody7, melody8, melody9, bass1, bass2, bass3, bass4];
 
-    if (soundClip.startsWith('drum')) soundClipType = 'drum';
-    if (soundClip.startsWith('melody')) soundClipType = 'melody';
-    if (soundClip.startsWith('bass')) soundClipType = 'bass';
-
-    // ----------------------- //
-
-    const queuedTimeStamps = [];
-
-    for (let i = 1; i <= 16; i += 1) {
-      if (this.state[`${soundClipType}${i}Status`] === 'queued') {
-        queuedTimeStamps.push({
-          name: `${soundClipType}${i}`,
-          LastQueuedAt: this.state[`${soundClipType}${i}LastQueuedAt`]
-        });
-      }
-    }
-
-    queuedTimeStamps.sort((a, b) => {
-      return b.LastQueuedAt - a.LastQueuedAt;
+    const queuedProfilesByType = profiles.filter((profile) => {
+      return profile.type === filterType && profile.status === 'queued';
     });
 
-    const toInactivateArray = queuedTimeStamps.slice(soundClipTypeLimits[soundClipType]);
-    const inactiveSounds = {};
-
-    toInactivateArray.forEach((queuedSoundClip) => {
-      inactiveSounds[`${queuedSoundClip.name}Status`] = 'inactive';
+    const sortedQueuedProfiles = queuedProfilesByType.sort((a, b) => {
+      return b.lastQueuedAt - a.lastQueuedAt;
     });
 
-    this.setState(inactiveSounds);
+    const toInactiveProfiles = sortedQueuedProfiles.slice(soundClipTypeLimits[filterType]);
+
+    const inactiveProfiles = {};
+    toInactiveProfiles.forEach((profile) => {
+      const oldProfile = this.state[profile.id];
+      const newProfile = Object.assign({}, oldProfile);
+
+      newProfile.status = 'inactive';
+      inactiveProfiles[newProfile.id] = newProfile;
+    });
+
+    this.setState(inactiveProfiles);
   }
 
   toggleDisplay() {
